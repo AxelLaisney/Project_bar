@@ -4,7 +4,9 @@
   "description": "Bar management API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +17,7 @@
     "express-validator": "^7.2.1",
     "nodemon": "^3.1.9",
     "sequelize": "^6.37.6",
-    "sqlite": "^5.1.1"
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   }
 }
