@@ -40,17 +40,17 @@ const create = (req, res) => {
         status: status,
         BarId: bar_id
     })
-    .then((commande) => res.status(201).json({ message: "commande added", commande}))
+    .then((commande) => res.status(201).json({ message: "commande added", commande})).catch((err) => res.status(500).json(err))
 }
 
 const update = (req, res) => {
     let id = parseInt(req.params.id)
-    Commande.update(req.body, { where: {id} }).then((commande) => res.json({ message: "commande updated", commande}))
+    Commande.update(req.body, { where: {id} }).then((commande) => res.json({ message: "commande updated", commande})).catch((err) => res.status(500).json(err))
 }
 
 const destroy = (req, res) => {
     let id = parseInt(req.params.id)
-    Commande.destroy({ where: {id}}).then(() => res.json({ message: "commande destroyed"}))
+    Commande.destroy({ where: {id}}).then(() => res.json({ message: "commande destroyed"})).catch((err) => res.status(500).json(err))
 }
 
 module.exports = { index, show, create, update, destroy }

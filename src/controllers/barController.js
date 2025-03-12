@@ -16,7 +16,7 @@ const index = async (req, res) => {
     console.log(where)
     bar.findAll(where).then((bar) => {
       res.json(bar)
-    })
+    }).catch((err) => res.status(500).json(err))
   }
 
 
@@ -29,14 +29,14 @@ const index = async (req, res) => {
       })
       .catch((err) => {
         res.status(404).json({ message: "Bar not found !" })
-      })
+      }).catch((err) => res.status(500).json(err))
   }
 
   const store = (req, res) => {
     bar.create(req.body)
       .then((bar) => {
         res.status(201).json({ message: "Bar created !", bar })
-      })
+      }).catch((err) => res.status(500).json(err))
   }
   const update = (req, res) => {
     const id = parseInt(req.params.id)
@@ -44,7 +44,7 @@ const index = async (req, res) => {
     bar.update(req.body, { where: { id } })
       .then((bar) => {
         res.json({ message: "Bar updated", bar })
-      })
+      }).catch((err) => res.status(500).json(err))
   }
   const destroy = (req, res) => {
     const id = parseInt(req.params.id)
@@ -52,7 +52,7 @@ const index = async (req, res) => {
     bar.destroy({ where : {id}})
     .then( (bar) => {
       res.json({message: "Bar Deleted", bar})
-    })
+    }).catch((err) => res.status(500).json(err))
   }
 
   module.exports = { index, show, store, update, destroy }
