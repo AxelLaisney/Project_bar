@@ -1,7 +1,7 @@
 const { body, validationresult } = require("express-validator")
 
 
-const validateProduct = [
+const validateBar = [
   body("name")
     .notEmpty().withMessage("Le nom doit être saisie ")
     .isString().withMessage("Le nom doit être un string")
@@ -36,4 +36,4 @@ const validateProduct = [
 
 
 
-module.exports = validateProduct
+module.exports = validateBar
