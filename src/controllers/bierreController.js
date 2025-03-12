@@ -2,8 +2,14 @@ const { Bar, Biere } = require("../models/models")
 const db = require = require("../../config/db")
 
 const index = (req, res) => {
+    let order = []
+    let sort = req.query["sort"]
+    if(sort != undefined && (sort == "asc" || sort == "desc")){
+        order = ['name', sort.toUpperCase()]
+    }
+    console.log(order)
     let id_bar = req.params.id_bar
-    Biere.findAll( {where: { BarId: id_bar}})
+    Biere.findAll( {where: { BarId: id_bar}, order: order})
     .then((biere) => res.json(biere))
     .catch((err) => res.status(500).json(err))
 }

@@ -1,4 +1,4 @@
-const bar  = require("../models/bar.js")
+const {bar, biere, commande}  = require("../models/bar.js")
 const {Op, where} = require("sequelize")
 
 
@@ -50,9 +50,11 @@ const index = async (req, res) => {
     const id = parseInt(req.params.id)
   
     bar.destroy({ where : {id}})
-    .then( (bar) => {
-      res.json({message: "Bar Deleted", bar})
-    }).catch((err) => res.status(500).json(err))
+    .then(() => {
+      biere.destroy({ where: {BarId: id}})
+    }).then(() => {
+      commande.destroy({ where: {BarId: id}})
+    }).then(() => res.json({message: "bar has been destroyed along with its beer(s)"})).catch((err) => res.status(500).json(err))
   }
 
   module.exports = { index, show, store, update, destroy }
