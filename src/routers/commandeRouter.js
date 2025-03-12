@@ -6,9 +6,9 @@ const { index, show, update, create, destroy} = require("../controllers/commande
 Router.get("/bars/:id_bar/commandes", index)
 Router.get("/commandes/:id", show)
 
-Router.post("/bars/:id_bar/commandes", validator, create)
+Router.post("/bars/:id_bar/commandes", create)
 
-Router.put("/commandes/:id", validator, update)
+Router.put("/commandes/:id", update)
 
 Router.delete("/commandes/:id", destroy)
 
