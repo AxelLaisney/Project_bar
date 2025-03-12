@@ -1,10 +1,26 @@
 const Commande = require("../models/commande")
+const {Op} = require("sequelize")
 
 const index = (req, res) => {
     let bar_id= parseInt(req.params.id_bar)
-    Commande.findAll({ where: {BarId: bar_id} })
+    let date = req.query["date"]
+    let prixMax = parseFloat(req.query["prix_max"])
+    let prixMin = parseFloat(req.query["prix_min"])
+    let where = {}
+    console.log(date)
+    if( prixMax != undefined && prixMin != undefined){
+        where = { where: {BarId: bar_id, prix: {[Op.between]: [prixMin, prixMax]}}}
+    }else if(date != undefined){
+        where = { where: {BarId: bar_id, date: {[Op.startsWith]: date}}}
+    }else{
+        where = { where: {BarId: bar_id}}
+    }
+    console.log(where)
+    Commande.findAll(where)
     .then((commande) => res.json(commande))
     .catch((err) => res.status(500).json(err))
+    
+
 }
 
 const show = (req, res) => {

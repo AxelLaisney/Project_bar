@@ -1,9 +1,10 @@
 const router = require("express").Router()
 
-const { index, show, update, create, destroy} = require("../controllers/bierreController")
+const { index, show, update, create, destroy, getDegree} = require("../controllers/bierreController")
 
 router.get("/bars/:id_bar/biere", index)
 router.get("/biere/:id", show)
+router.get("/bars/:id_bar/degree", getDegree)
 
 router.post("/bars/:id_bar/biere", create)
 

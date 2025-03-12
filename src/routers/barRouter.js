@@ -1,6 +1,6 @@
 const Router = require("express").Router()
 
-const { index, show, update, destroy, store} = require("../controller/barController")
+const { index, show, update, destroy, store} = require("../controllers/barController")
 
 
 Router.get("/bars", index)

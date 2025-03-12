@@ -10,10 +10,17 @@ const index = (req, res) => {
 
 const show = (req, res) => { 
     let id = parseInt(req.params.id)
-    console.log(id)
     Biere.findByPk(id)
     .then((biere) => res.json(biere))
     .catch((err) => res.status(500).json(err))
+}
+
+const getDegree = (req, res) => {
+    let barId = parseInt(req.params.id_bar)
+    const sum = `(SELECT AVG(degree) FROM Bieres WHERE BarId = ${barId})`
+    Bar.findByPk(barId, {
+        attributes: { include: [[db.literal(sum), "degree"]]}
+    }).then((query) => res.json(query))
 }
 
 const create = (req, res) =>{
@@ -39,4 +46,4 @@ const destroy = (req, res) =>{
     Biere.destroy({ where :{id}}).then(() => res.json({ message: "Biere destroyed"}))
 }
 
-module.exports = { index, show, create, update, destroy }
+module.exports = { index, show, create, update, destroy, getDegree }

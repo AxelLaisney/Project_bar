@@ -1,8 +1,20 @@
 const bar  = require("../models/bar.js")
+const {Op, where} = require("sequelize")
 
 
 const index = async (req, res) => {
-    bar.findAll().then((bar) => {
+    let ville = req.query["ville"]
+    let name = req.query["name"]
+    let where = {}
+    if(ville != undefined){
+      ville = "%" + ville
+      where = { where: {adresse: {[Op.like]: ville}}}
+    }else if(name != undefined){
+      name = "%" + name
+      where = { where: {name: {[Op.like]: name}}}
+    }
+    console.log(where)
+    bar.findAll(where).then((bar) => {
       res.json(bar)
     })
   }
