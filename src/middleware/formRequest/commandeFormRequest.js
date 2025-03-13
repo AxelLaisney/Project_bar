@@ -1,4 +1,4 @@
-const { body, validationresult } = require("express-validator")
+const { body, validationResult } = require("express-validator")
 
 
 const validateCommande = [
@@ -24,7 +24,7 @@ const validateCommande = [
     .withMessage("Le statut doit être 'brouillon', 'en cours' ou 'terminée'"),
 
   (req, res, next) => {
-    const errors = validationresult(req)
+    const errors = validationResult(req)
     if (errors) return res.status(400).json({ errors });
 
     next()

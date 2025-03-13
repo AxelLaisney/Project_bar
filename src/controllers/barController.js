@@ -1,5 +1,5 @@
-const {bar, biere, commande}  = require("../models/bar.js")
-const {Op, where} = require("sequelize")
+const {Bar, Biere, Commande}  = require("../models/models")
+const {Op} = require("sequelize")
 
 
 const index = async (req, res) => {
@@ -14,7 +14,7 @@ const index = async (req, res) => {
       where = { where: {name: {[Op.like]: name}}}
     }
     console.log(where)
-    bar.findAll(where).then((bar) => {
+    Bar.findAll(where).then((bar) => {
       res.json(bar)
     }).catch((err) => res.status(500).json(err))
   }
@@ -23,7 +23,7 @@ const index = async (req, res) => {
   const show = (req, res) => {
     const id = parseInt(req.params.id)
   
-    bar.findByPk(id)
+    Bar.findByPk(id)
       .then((bar) => {
         res.json(bar)
       })
@@ -33,7 +33,7 @@ const index = async (req, res) => {
   }
 
   const store = (req, res) => {
-    bar.create(req.body)
+    Bar.create(req.body)
       .then((bar) => {
         res.status(201).json({ message: "Bar created !", bar })
       }).catch((err) => res.status(500).json(err))
@@ -41,7 +41,7 @@ const index = async (req, res) => {
   const update = (req, res) => {
     const id = parseInt(req.params.id)
   
-    bar.update(req.body, { where: { id } })
+    Bar.update(req.body, { where: { id } })
       .then((bar) => {
         res.json({ message: "Bar updated", bar })
       }).catch((err) => res.status(500).json(err))
@@ -49,11 +49,11 @@ const index = async (req, res) => {
   const destroy = (req, res) => {
     const id = parseInt(req.params.id)
   
-    bar.destroy({ where : {id}})
+    Bar.destroy({ where : {id}})
     .then(() => {
-      biere.destroy({ where: {BarId: id}})
+      Biere.destroy({ where: {BarId: id}})
     }).then(() => {
-      commande.destroy({ where: {BarId: id}})
+      Commande.destroy({ where: {BarId: id}})
     }).then(() => res.json({message: "bar has been destroyed along with its beer(s)"})).catch((err) => res.status(500).json(err))
   }
 

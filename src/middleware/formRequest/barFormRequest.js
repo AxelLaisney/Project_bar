@@ -1,4 +1,4 @@
-const { body, validationresult } = require("express-validator")
+const { body, validationResult } = require("express-validator")
 
 
 const validateBar = [
@@ -27,7 +27,7 @@ const validateBar = [
     .trim(),
 
   (req, res, next) => {
-    const errors = validationresult(req)
+    const errors = validationResult(req)
     if (errors) return res.status(400).json({ errors });
 
     next()

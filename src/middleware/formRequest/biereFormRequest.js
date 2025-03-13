@@ -1,4 +1,4 @@
-const { body, validationresult } = require("express-validator")
+const { body, validationResult } = require("express-validator")
 
 
 const validateBiere = [
@@ -13,17 +13,17 @@ const validateBiere = [
 
   body("prix")
     .notEmpty().withMessage("Le prix doit être saisie ")
-    .isFloat({ gt: 0 }).withMessage("Le prix doit être un nombre")
+    .isString().withMessage("Le prix doit être un nombre")
     .trim(),
 
-    body("degree")
+  body("degree")
     .notEmpty().withMessage("Le degré doit être saisie ")
-    .isFloat({ gt: 0 }).withMessage("Le degré doit être un nombre")
+    .isString().withMessage("Le degré doit être un nombre")
     .trim(),
 
   (req, res, next) => {
-    const errors = validationresult(req)
-    if (errors) return res.status(400).json({ errors });
+    const errors = validationResult(req)
+    if (errors) return res.status(400).json({ errors })
 
     next()
   }

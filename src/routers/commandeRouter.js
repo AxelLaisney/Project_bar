@@ -12,6 +12,6 @@ Router.post("/commandes/:Cid/biere/:Bid", addBiereToCommande)
 Router.put("/commandes/:id", update)
 
 Router.delete("/commandes/:id", destroy)
-Router.delete("/commandes/:Cid/biere/Bid", deleteBiereCommande)
+Router.delete("/commandes/:Cid/biere/:Bid", deleteBiereCommande)
 
 module.exports = Router;

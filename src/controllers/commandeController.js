@@ -1,4 +1,4 @@
-const { Commande, Biere } = require("../models/commande")
+const { Commande, Biere } = require("../models/models")
 const {Op} = require("sequelize")
 
 const index = (req, res) => {
@@ -70,13 +70,14 @@ const addBiereToCommande = async (req, res) => {
 const deleteBiereCommande = async (req, res) => {
     let Cid = parseInt(req.params.Cid)
     let Bid = parseInt(req.params.Bid)
+    console.log(Cid, Bid)
 
     const [com, beer] = await Promise.all([
         Commande.findByPk(Cid),
         Biere.findByPk(Bid)
     ])
 
-    await com.addBiere(beer)
+    await com.removeBiere(beer)
 
     res.json({ message: "Removed"})
 }
