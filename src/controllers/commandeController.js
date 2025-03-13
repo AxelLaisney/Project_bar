@@ -1,4 +1,4 @@
-const Commande = require("../models/commande")
+const { Commande, Biere } = require("../models/commande")
 const {Op} = require("sequelize")
 
 const index = (req, res) => {
@@ -53,4 +53,32 @@ const destroy = (req, res) => {
     Commande.destroy({ where: {id}}).then(() => res.json({ message: "commande destroyed"})).catch((err) => res.status(500).json(err))
 }
 
-module.exports = { index, show, create, update, destroy }
+const addBiereToCommande = async (req, res) => {
+    let Cid = parseInt(req.params.Cid)
+    let Bid = parseInt(req.params.Bid)
+    console.log(Cid, Bid)
+    const [com, beer] = await Promise.all([
+        Commande.findByPk(Cid),
+        Biere.findByPk(Bid)
+    ])
+
+    com.addBiere(beer)
+
+    res.json({ message: "Added"})   
+}
+
+const deleteBiereCommande = async (req, res) => {
+    let Cid = parseInt(req.params.Cid)
+    let Bid = parseInt(req.params.Bid)
+
+    const [com, beer] = await Promise.all([
+        Commande.findByPk(Cid),
+        Biere.findByPk(Bid)
+    ])
+
+    await com.addBiere(beer)
+
+    res.json({ message: "Removed"})
+}
+
+module.exports = { index, show, create, update, destroy, addBiereToCommande, deleteBiereCommande }
