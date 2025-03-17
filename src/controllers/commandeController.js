@@ -4,13 +4,15 @@ const {Op} = require("sequelize")
 const index = (req, res) => {
     let bar_id= parseInt(req.params.id_bar)
     let date = req.query["date"]
-    let prixMax = parseFloat(req.query["prix_max"])
-    let prixMin = parseFloat(req.query["prix_min"])
+    let prixMax = req.query["prix_max"]
+    let prixMin = req.query["prix_min"]
     let where = {}
-    console.log(date)
-    if( prixMax != undefined && prixMin != undefined){
+    let a = 1
+    
+    console.log(date, prixMax, prixMin)
+    if(prixMin !== undefined && prixMax !== undefined){
         where = { where: {BarId: bar_id, prix: {[Op.between]: [prixMin, prixMax]}}}
-    }else if(date != undefined){
+    }else if(date !== undefined){
         where = { where: {BarId: bar_id, date: {[Op.startsWith]: date}}}
     }else{
         where = { where: {BarId: bar_id}}

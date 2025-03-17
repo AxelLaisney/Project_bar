@@ -1,9 +1,12 @@
 require("dotenv").config()
 require("./src/models/models")
+const cors = require("cors")
 
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
+app.use(cors())
+
 
 const PORT = process.env.SERVER_PORT || 3000
 
